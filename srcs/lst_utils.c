@@ -6,13 +6,13 @@
 /*   By: mvidal-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 18:14:59 by mvidal-a          #+#    #+#             */
-/*   Updated: 2020/01/06 18:15:07 by mvidal-a         ###   ########.fr       */
+/*   Updated: 2020/01/29 14:31:27 by mvidal-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-void	free_data(t_data *data)
+void			free_data(t_data *data)
 {
 	t_data	*tmp;
 
@@ -24,14 +24,14 @@ void	free_data(t_data *data)
 	}
 }
 
-t_data	*lstlast_data(t_data *data)
+static t_data	*lstlast_data(t_data *data)
 {
 	while (data->next != NULL)
 		data = data->next;
 	return (data);
 }
 
-void	lstadd_data_back(t_data **begin, t_data *data)
+void			lstadd_data_back(t_data **begin, t_data *data)
 {
 	if (*begin == NULL)
 		*begin = data;
@@ -39,7 +39,7 @@ void	lstadd_data_back(t_data **begin, t_data *data)
 		lstlast_data(*begin)->next = data;
 }
 
-t_data	*lstnew_data(t_data **begin)
+t_data			*lstnew_data(t_data **begin)
 {
 	t_data	*data;
 

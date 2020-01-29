@@ -6,7 +6,7 @@
 #    By: mvidal-a <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/23 13:17:34 by mvidal-a          #+#    #+#              #
-#    Updated: 2020/01/06 18:19:41 by mvidal-a         ###   ########.fr        #
+#    Updated: 2020/01/29 14:12:23 by mvidal-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,17 @@ SRCS		+= char_fills.c
 SRCS		+= num_fills.c
 SRCS		+= complete_fills.c
 
+SRCS		+= ft_atoi.c
+SRCS		+= ft_memcpy.c
+SRCS		+= ft_memset.c
+SRCS		+= ft_strlen.c
+SRCS		+= ft_index.c
+SRCS		+= read_bit.c
+SRCS		+= turn_bit_off.c
+SRCS		+= turn_bit_on.c
+
+VPATH		= srcs:libft_srcs
+
 OBJS		= $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 
 OBJDIR		= objects
@@ -28,31 +39,30 @@ NAME		= libftprintf.a
 
 INCLUDES	= ./
 
-HEADER		= $(INCLUDES)libftprintf.h
+HEADERS		+= $(INCLUDES)libftprintf.h
+HEADERS		+= $(INCLUDES)libft.h
 
 CC			= clang
 
 CFLAGS		+= -Wall
 CFLAGS		+= -Wextra
 CFLAGS		+= -Werror
+CFLAGS		+= -Wpadded
 
 all:			$(NAME)
 
 $(NAME):		$(OBJS)
-				$(MAKE) -C libft
-				cp libft/libft.a $@
 				ar rcs $@ $^
-				
+
 $(OBJDIR)/%.o:	%.c
 				$(CC) $(CFLAGS) -I $(INCLUDES) -c $< -o $@
 
-$(OBJS):		$(HEADER) | $(OBJDIR)
+$(OBJS):		$(HEADERS) | $(OBJDIR)
 
 $(OBJDIR):
 				mkdir $@
 
 clean:
-				make fclean -C libft
 				$(RM) -r $(OBJDIR)
 
 fclean:			clean

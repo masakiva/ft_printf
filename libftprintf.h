@@ -6,7 +6,7 @@
 /*   By: mvidal-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 12:47:24 by mvidal-a          #+#    #+#             */
-/*   Updated: 2020/01/04 18:09:34 by mvidal-a         ###   ########.fr       */
+/*   Updated: 2020/01/29 14:31:33 by mvidal-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,49 +14,46 @@
 # define LIBFTPRINTF_H
 
 # include <stdarg.h>
-# include "libft/libft.h"
+# include "libft.h"
 # include <unistd.h>
 # include <stdlib.h>
 
 # define ERROR	-1
 
-# define PREC	0
-# define WIDTH	1
-# define ZERO	2
-# define MINUS	3
-# define W_AST	4
-# define P_AST	5
+enum e_flag
+{
+	PREC,
+	WIDTH,
+	ZERO,
+	MINUS,
+	W_AST,
+	P_AST
+};
 
 typedef	uint8_t		t_byte;
 typedef	int8_t		t_sbyte;
 typedef	struct		s_data
 {
-	t_sbyte			type;
-	t_byte			flags;
+	struct s_data	*next;
 	int				arglen;
 	int				width;
 	int				prec;
 	int				len;
 	int				end;
-	struct s_data	*next;
+	t_sbyte			type;
+	t_byte			flags;
+	char			pad[2];
 }					t_data;
+typedef void	(*t_conv)(va_list, t_data *);
+typedef void	(*t_fill)(va_list, t_data *, char *);
 
-int					ft_printf(const char *format, ...);
-int					parse_and_get_size(const char *format, va_list arg,
-						t_data **begin);
-t_data				*parse_conv_wrapper(const char *format, int *i, va_list arg,
-						t_data **b);
-int					parse_conv(const char *format, int i, va_list arg,
-						t_data *data);
 t_data				*lstnew_data(t_data **begin);
-t_data				*lstlast_data(t_data *data);
 void				lstadd_data_back(t_data **begin, t_data *data);
 void				free_data(t_data *data);
 int					parse_flags(const char *format, int i, t_data *data);
 int					parse_prec(const char *format, va_list arg, int i,
 						t_data *data);
 int					parse_len(const char *format, int i, int *len);
-int					number_len(const char *n);
 t_sbyte				conv_index(const char *format);
 void				c_len(va_list ap, t_data *data);
 void				s_len(va_list ap, t_data *data);
@@ -68,8 +65,6 @@ void				x_len(va_list ap, t_data *data);
 int					n_add_flags(t_data *data, long n);
 void				perc_len(va_list ap, t_data *data);
 int					add_width(int width, int len);
-void				fill_output(const char *format, va_list arg,
-						t_data *data, char *output);
 void				c_fill(va_list arg, t_data *data, char *output);
 void				s_fill(va_list arg, t_data *data, char *output);
 void				p_fill(va_list arg, t_data *data, char *output);

@@ -6,13 +6,13 @@
 /*   By: mvidal-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 18:13:12 by mvidal-a          #+#    #+#             */
-/*   Updated: 2020/01/06 18:14:45 by mvidal-a         ###   ########.fr       */
+/*   Updated: 2020/01/29 14:26:02 by mvidal-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-t_sbyte	conv_index(const char *format)
+t_sbyte		conv_index(const char *format)
 {
 	static char	types[] = "cspdiuxX%";
 	t_sbyte		index;
@@ -23,7 +23,7 @@ t_sbyte	conv_index(const char *format)
 	return (index);
 }
 
-int		number_len(const char *n)
+static int	number_len(const char *n)
 {
 	int		len;
 
@@ -33,7 +33,7 @@ int		number_len(const char *n)
 	return (len);
 }
 
-int		parse_flags(const char *format, int i, t_data *data)
+int			parse_flags(const char *format, int i, t_data *data)
 {
 	while (format[i] != '\0')
 	{
@@ -48,7 +48,7 @@ int		parse_flags(const char *format, int i, t_data *data)
 	return (i);
 }
 
-int		parse_len(const char *format, int i, int *len)
+int			parse_len(const char *format, int i, int *len)
 {
 	if (format[i] >= '0' && format[i] <= '9')
 		*len = ft_atoi(format + i);
@@ -56,7 +56,7 @@ int		parse_len(const char *format, int i, int *len)
 	return (i);
 }
 
-int		parse_prec(const char *format, va_list arg, int i, t_data *data)
+int			parse_prec(const char *format, va_list arg, int i, t_data *data)
 {
 	if (format[i] == '.')
 	{

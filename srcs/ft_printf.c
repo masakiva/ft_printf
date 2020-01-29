@@ -6,16 +6,16 @@
 /*   By: mvidal-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 17:55:57 by mvidal-a          #+#    #+#             */
-/*   Updated: 2020/01/06 18:14:44 by mvidal-a         ###   ########.fr       */
+/*   Updated: 2020/01/29 15:13:04 by mvidal-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-int		parse_conv(const char *format, int i, va_list arg, t_data *data)
+static int		parse_conv(const char *format, int i, va_list arg, t_data *data)
 {
-	static void	(*conv_len[9])(va_list, t_data *) = {c_len, s_len,
-		p_len, i_len, i_len, u_len, x_len, x_len, perc_len};
+	static t_conv conv_len[9] = {c_len, s_len, p_len,
+		i_len, i_len, u_len, x_len, x_len, perc_len};
 
 	i = parse_flags(format, i, data);
 	if (format[i] == '*')
@@ -41,7 +41,7 @@ int		parse_conv(const char *format, int i, va_list arg, t_data *data)
 	return (i);
 }
 
-t_data	*parse_conv_wrapper(const char *format, int *i, va_list arg, t_data **b)
+static t_data	*parse_conv_wrapper(const char *format, int *i, va_list arg, t_data **b)
 {
 	t_data		*data;
 
@@ -55,7 +55,7 @@ t_data	*parse_conv_wrapper(const char *format, int *i, va_list arg, t_data **b)
 	return (data);
 }
 
-int		parse_and_get_size(const char *format, va_list arg, t_data **begin)
+static int		parse_and_get_size(const char *format, va_list arg, t_data **begin)
 {
 	int			len;
 	int			i;
@@ -83,12 +83,12 @@ int		parse_and_get_size(const char *format, va_list arg, t_data **begin)
 	return (len);
 }
 
-void	fill_output(const char *format, va_list arg, t_data *data, char *output)
+static void		fill_output(const char *format, va_list arg, t_data *data, char *output)
 {
-	static void	(*fill_type[9])(va_list, t_data *, char *) = {c_fill, s_fill,
-		p_fill, i_fill, i_fill, u_fill, lx_fill, ux_fill, perc_fill};
-	int			i;
-	int			j;
+	static t_fill	fill_type[9] = {c_fill, s_fill, p_fill,
+		i_fill, i_fill, u_fill, lx_fill, ux_fill, perc_fill};
+	int				i;
+	int				j;
 
 	i = 0;
 	j = 0;
@@ -110,7 +110,7 @@ void	fill_output(const char *format, va_list arg, t_data *data, char *output)
 	}
 }
 
-int		ft_printf(const char *format, ...)
+int				ft_printf(const char *format, ...)
 {
 	va_list	arg;
 	int		total_len;
@@ -128,7 +128,7 @@ int		ft_printf(const char *format, ...)
 		if (output != NULL)
 		{
 			fill_output(format, arg, data, output);
-			write(1, output, total_len);
+			write(STDOUT_FILENO, output, total_len);
 			free(output);
 		}
 	}

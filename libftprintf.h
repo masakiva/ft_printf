@@ -6,7 +6,7 @@
 /*   By: mvidal-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 12:47:24 by mvidal-a          #+#    #+#             */
-/*   Updated: 2020/01/29 14:31:33 by mvidal-a         ###   ########.fr       */
+/*   Updated: 2020/02/24 10:46:34 by mvidal-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef	struct		s_data
 typedef void	(*t_conv)(va_list, t_data *);
 typedef void	(*t_fill)(va_list, t_data *, char *);
 
+int					ft_printf(const char *format, ...);
 t_data				*lstnew_data(t_data **begin);
 void				lstadd_data_back(t_data **begin, t_data *data);
 void				free_data(t_data *data);

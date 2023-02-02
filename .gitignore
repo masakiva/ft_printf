@@ -5,6 +5,4 @@ main.c
 libftprintf.a
 libft.a
 *.swp
-pft/
-pft_2019/
-42TESTERS-PRINTF/
+notes_testeurs.txt
